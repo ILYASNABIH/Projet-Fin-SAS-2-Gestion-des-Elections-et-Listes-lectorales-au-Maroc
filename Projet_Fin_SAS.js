@@ -1,3 +1,50 @@
+function keys(object){
+    const cles = []
+    for (let cle in object) {
+        cles.push(cle)
+    }
+    return cles
+}
+function pourchacun(table, callback) {
+    for (let i = 0; i < table.length; i++) {
+        callback(table[i], i, table);
+    }
+}
+function join(table, separateur = ",") {
+    let result = "";
+    for (let i = 0; i < table.length; i++ ) {
+        let valeur = (table[i] !== null && table[i] !== undefined) ? table[i] : ""
+        result += valeur;
+        if (i < table.length - 1 ) {
+            result += separateur;
+        }
+    }
+    return result;
+
+}
+function map(table, callback) {
+    const result = [];
+    for (let i = 0; i < table.length; i++) {
+        result.push(callback(table[i], i, table));
+    }
+    return result;
+} 
+function tableau(infos) {
+    if (!Array.isArray(infos) || infos.length === 0)
+        {return console.log(infos)};
+        const colonnes = keys(infos[0])
+        console.log("N.C | " + join (colonnes, " | "));
+        console.log("-".repeat(80));
+        pourchacun(infos, (item, index) => {
+            const valeurs = map(colonnes, col => {
+                const val = item[col];
+                if (Array.isArray(val)) return join (val, ", ");
+                return val ?? "";
+            });
+        console.log(`[${index}] | ` + join(valeurs, " | "));
+        console.log("-".repeat(80));
+    });
+}
 const prompt = require('prompt-sync') ();
 let p;
 let c;
@@ -41,7 +88,7 @@ do {
             break;
         case 2:
             console.clear()
-            console.table(candidats)
+            tableau (candidats);
             c = prompt("continue...")
             break;
 
