@@ -10,6 +10,18 @@ function pourchacun(table, callback) {
         callback(table[i], i, table);
     }
 }
+function join(table, separateur = ",") {
+    let result = "";
+    for (let i = 0; i < table.length; i++ ) {
+        let valeur = (table[i] !== null && table[i] !== undefined) ? table[i] : ""
+        result += valeur;
+        if (i < table.length - 1 ) {
+            result += separateur;
+        }
+    }
+    return result;
+
+}
 
 const prompt = require('prompt-sync') ();
 let p;
