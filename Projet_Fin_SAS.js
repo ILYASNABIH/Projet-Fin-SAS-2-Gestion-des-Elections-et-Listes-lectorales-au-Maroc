@@ -28,7 +28,13 @@ function map(table, callback) {
     }
     return result;
 }
-
+function aligner(texte, largeur) {
+    let str = String(texte);
+    while (str.length < largeur){
+        str+= " ";
+    }
+    return str;
+}
 
 const prompt = require('prompt-sync') ();
 let p;
