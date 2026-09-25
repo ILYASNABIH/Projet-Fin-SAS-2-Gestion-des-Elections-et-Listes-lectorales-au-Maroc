@@ -20,8 +20,15 @@ function join(table, separateur = ",") {
         }
     }
     return result;
-
 }
+function map(table, callback) {
+    const result = [];
+    for (let i = 0; i < table.length; i++) {
+        result.push(callback(table[i], i, table));
+    }
+    return result;
+}
+
 
 const prompt = require('prompt-sync') ();
 let p;
