@@ -35,6 +35,37 @@ function aligner(texte, largeur) {
     }
     return str;
 }
+function tableau(infos) {
+    if (!Array.isArray(infos) || infos.length === 0)
+        {return console.log(infos)};
+        const colonnes = keys(infos[0]);
+        const largeurs = {};
+        pourchacun(colonnes, col => {
+            let max = col.length;
+            pourchacun(infos, item =>{
+                let val = item[col];
+                if (Array.isArray(val)) val = join(val, ", ");
+                let longueur = String(val ?? "").length;
+                if (longueur > max) max = longueur;
+            });
+            largeurs[col] = max;
+        });
+        const entete = map(colonnes, col => aligner(col, largeurs[col]));
+        const entetealignes = "N.C | " + join(entete, " | ");
+        console.log(entetealignes);
+        console.log("-".repeat(entetealignes.length));
+
+        pourchacun(infos, (item, index) => {
+            const valeurs = map(colonnes, col => {
+
+                let val = item[col];
+                if (Array.isArray(val)) val = join (val, ", ");
+                return aligner(val ?? "", largeurs[col]);
+            });
+        console.log(`[${index}] | ` + join(valeurs, " | "));
+        console.log("-".repeat(entetealignes.length));
+    });
+}
 
 const prompt = require('prompt-sync') ();
 let p;
