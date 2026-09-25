@@ -5,6 +5,11 @@ function keys(object){
     }
     return cles
 }
+function pourchacun(table, callback) {
+    for (let i = 0; i < table.length; i++) {
+        callback(table[i], i, table);
+    }
+}
 
 const prompt = require('prompt-sync') ();
 let p;
