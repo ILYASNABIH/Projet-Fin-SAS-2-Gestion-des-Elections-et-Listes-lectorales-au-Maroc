@@ -1,6 +1,8 @@
 const prompt = require('prompt-sync') ();
 let p;
 let c;
+let a;
+let n;
 const candidats = [{
 CIN : "AB123456",
 Nom : "Boushaba",
@@ -90,13 +92,39 @@ function ajouter(cin, nom, prenom, partipolitique, age,) {
             prenom = prompt("Tapez le prénom de candidat : ");
             partipolitique = prompt("Tapez la parti politique de candidat : ");
             age = Number(prompt("Tapez l'age de candidat : "));
-            candidats.push({CIN : cin, Nom : nom, Prénom: prenom, PartiPolitique: partipolitique, Age: age})
+            candidats.push({CIN : cin, Nom : nom, Prénom: prenom, PartiPolitique: partipolitique, Age: age, Electeurs : [] })
             console.log("le candidat a ete ajoute avec succes");
+            a = prompt("Voulez-vous ajouter autre condidat? y/n")
+            if (a === "y"){
+                n = Number(prompt("Tapez le nombre des candidats a ajouter : "))
+                for (let i = 0 ; i <= n ; i++ ){
+                    cin = prompt("Tapez le CIN de candidat : ");
+                    nom = prompt("Tapez le nom de candidat : ");
+                    prenom = prompt("Tapez le prénom de candidat : ");
+                    partipolitique = prompt("Tapez la parti politique de candidat : ");
+                    age = Number(prompt("Tapez l'age de candidat : "));
+                    candidats.push({CIN : cin, Nom : nom, Prénom: prenom, PartiPolitique: partipolitique, Age: age, Electeurs: []});
+                    console.log("le candidat a ete ajoute avec succes");
+                }
+            }
 }
 function Tri (tableaudobjet){ 
     for (let i = 0; i < tableaudobjet.length - 1; i++){ 
     for (let j = 0; j < tableaudobjet.length - 1 - i; j++) {
-        if (tableaudobjet[j].Electeurs.length < tableaudobjet[j + 1].Electeurs.length) {
+        let votes1;
+        if (tableaudobjet[j].Electeurs !== undefined && tableaudobjet[j].Electeurs !== null){
+            votes1 = tableaudobjet[j].Electeurs.length;
+        } else {
+            votes1 = 0;
+        }
+
+        let votes2;
+        if (tableaudobjet[j + 1].Electeurs !== undefined && tableaudobjet[j + 1].Electeurs !== null) {
+            votes2 = tableaudobjet[j + 1].Electeurs.length;
+        } else {
+            votes2 = 0;
+        }
+            if (votes1 < votes2) {
             let temp = tableaudobjet[j];
             tableaudobjet[j] = tableaudobjet[j + 1];
             tableaudobjet[j + 1] = temp;
@@ -104,7 +132,6 @@ function Tri (tableaudobjet){
         }
     }
 }
-
 do {
     console.log("-------------------MENU------------------");
     console.log("Tapez 1 pour ajouter un nouveau candidat ");
@@ -128,8 +155,6 @@ do {
             tableau (candidats);
             c = prompt("continue...")
             break;
-        case 3:
-
-            
+        case 3:      
     }
 } while (p!==0)
