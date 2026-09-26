@@ -62,7 +62,7 @@ function tableau(infos) {
             let max = col.length;
             pourchacun(infos, item =>{
                 let val = item[col];
-                if (Array.isArray(val)) val = join(val, ", ");
+                if (Array.isArray(val)) val = val.length;
                 let longueur = String(val ?? "").length;
                 if (longueur > max) max = longueur;
             });
@@ -77,7 +77,7 @@ function tableau(infos) {
             const valeurs = map(colonnes, col => {
 
                 let val = item[col];
-                if (Array.isArray(val)) val = join (val, ", ");
+                if (Array.isArray(val)) val = val.length;
                 return aligner(val ?? "", largeurs[col]);
             });
         console.log(`[${index}] | ` + join(valeurs, " | "));
@@ -129,7 +129,7 @@ do {
             c = prompt("continue...")
             break;
         case 3:
-            
+
             
     }
 } while (p!==0)
