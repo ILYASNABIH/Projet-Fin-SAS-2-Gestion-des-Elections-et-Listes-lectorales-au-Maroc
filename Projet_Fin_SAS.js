@@ -7,14 +7,14 @@ Nom : "Boushaba",
 Prénom : "Soufiane",
 PartiPolitique : "Indépendant",
 Age: 40,
-Electeurs: ["KL123456", "YI918273", "G784593", "M974310"]
+Electeurs: ["KL123456", "YI918273", "G784593"]
 }, {
 CIN: "CD987654",
 Nom: "Akhenoch",
 Prénom: "Aziz",
-PartiPolitique: "Independant",
+PartiPolitique: "Indépendant",
 Age: 65,
-Electeurs: ["N987654", "J123456" , "H123678"]
+Electeurs: ["N987654", "J123456" , "H123678", "M974310"]
 }];
 function keys(object){
     const cles = []
@@ -84,7 +84,7 @@ function tableau(infos) {
         console.log("-".repeat(entetealignes.length));
     });
 }
-function ajouter(cin, nom, prenom, partipolitique, age, electeurs) {
+function ajouter(cin, nom, prenom, partipolitique, age,) {
             cin = prompt("Tapez le CIN de candidat : ");
             nom = prompt("Tapez le nom de candidat : ");
             prenom = prompt("Tapez le prénom de candidat : ");
@@ -92,6 +92,17 @@ function ajouter(cin, nom, prenom, partipolitique, age, electeurs) {
             age = Number(prompt("Tapez l'age de candidat : "));
             candidats.push({CIN : cin, Nom : nom, Prénom: prenom, PartiPolitique: partipolitique, Age: age})
             console.log("le candidat a ete ajoute avec succes");
+}
+function Tri (tableaudobjet){ 
+    for (let i = 0; i < tableaudobjet.length - 1; i++){ 
+    for (let j = 0; j < tableaudobjet.length - 1 - i; j++) {
+        if (tableaudobjet[j].Electeurs.length < tableaudobjet[j + 1].Electeurs.length) {
+            let temp = tableaudobjet[j];
+            tableaudobjet[j] = tableaudobjet[j + 1];
+            tableaudobjet[j + 1] = temp;
+            }
+        }
+    }
 }
 
 do {
@@ -113,8 +124,12 @@ do {
             break;
         case 2:
             console.clear()
+            Tri (candidats)
             tableau (candidats);
             c = prompt("continue...")
             break;
+        case 3:
+            
+            
     }
 } while (p!==0)
