@@ -3,18 +3,21 @@ let p;
 let c;
 let a;
 let n;
+let s;
+let f;
+let found;
 const candidats = [{
 CIN : "AB123456",
 Nom : "Boushaba",
 Prénom : "Soufiane",
-PartiPolitique : "Indépendant",
+PartiPolitique : "Independant",
 Age: 40,
 Electeurs: ["KL123456", "YI918273", "G784593"]
 }, {
 CIN: "CD987654",
 Nom: "Akhenoch",
 Prénom: "Aziz",
-PartiPolitique: "Indépendant",
+PartiPolitique: "Independant",
 Age: 65,
 Electeurs: ["N987654", "J123456" , "H123678", "M974310"]
 }];
@@ -97,7 +100,7 @@ function ajouter(cin, nom, prenom, partipolitique, age,) {
             a = prompt("Voulez-vous ajouter autre condidat? y/n")
             if (a === "y"){
                 n = Number(prompt("Tapez le nombre des candidats a ajouter : "))
-                for (let i = 0 ; i <= n ; i++ ){
+                for (let i = 0 ; i < n ; i++ ){
                     cin = prompt("Tapez le CIN de candidat : ");
                     nom = prompt("Tapez le nom de candidat : ");
                     prenom = prompt("Tapez le prénom de candidat : ");
@@ -132,6 +135,21 @@ function Tri (tableaudobjet){
         }
     }
 }
+function filtre(table) {
+    console.clear();
+    const recherche = prompt("Entrez le parti politique recherché : ");
+    const resultat = [];
+    for (let i = 0; i < table.length; i++) {
+        if (table[i].PartiPolitique === recherche) {
+            resultat.push(table[i]);
+        }
+    }
+    if (resultat.length === 0) {
+        console.log("Aucun candidat trouve pour ce parti politique.");
+    } else {console.log(`\n--- candidats du parti : ${recherche} ---`);
+    tableau(resultat);
+    }
+}
 do {
     console.log("-------------------MENU------------------");
     console.log("Tapez 1 pour ajouter un nouveau candidat ");
@@ -153,7 +171,13 @@ do {
             console.clear()
             Tri (candidats)
             tableau (candidats);
-            c = prompt("continue...")
+            console.log("Tapez sur n'importe quel bouton pour revenir au menu : ")
+            console.log("Tapez 1 pour filtrer par PartiPolitique : ")
+            c =  Number(prompt("continue... "));
+            if(c == 1) {
+                filtre(candidats)
+                f = prompt("continue ...")
+            };
             break;
         case 3:      
     }
