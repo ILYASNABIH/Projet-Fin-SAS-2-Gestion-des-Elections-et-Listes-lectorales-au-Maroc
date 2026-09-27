@@ -205,7 +205,45 @@ function voter(table) {
         console.log("aucun candidat trouve avec ce CIN.");
     }
 }
-function modifier (table) {}
+function modifier (table) {
+    console.clear();
+    const cin = prompt("Tapez le CIN du candidat a modifier : ");
+    let found = false;
+    for (let i = 0; i < table.length; i++ ){
+        if (table[i].CIN === cin) {
+            found = true;
+            console.log(`\n Candidat trouve : ${table[i].Prénom} ${table[i].Nom}`);
+            console.log("Que souhaitez-vous modifier ? ")
+            console.log("Tapez 1 pour changer le Nom");
+            console.log("Tapez 2 pour changer le Prénom");
+            console.log("Tapez 3 pour changer la Parti Politique");
+            console.log("Tapez 4 pour changer l'Age");
+            let choix = Number(prompt("Tapez votre choix : "));
+            switch (choix) {
+                case 1:
+                    table[i].Nom = prompt("Tapez le nouveau Nom : ");
+                    break;
+                case 2:
+                    table[i].Prénom = prompt("Tapez le nouveau Prenom : ");
+                    break;
+                case 3:
+                    table[i].PartiPolitique = prompt("Tapez la nouvelle Partie Politique : ");
+                    break;
+                case 4:
+                    table[i].Age = prompt("Tapez la nouvelle Age : ");
+                    break;
+                default:
+                    console.log("choix invalide.");
+            }
+            console.log("\n Les information du candidat sont ete ajoute avec succes");
+            break;
+        }
+    }
+    if (!found) {
+        console.log("Aucun candidat trouve avec ce CIN.");
+    }
+}
+
 do {
     console.log("-------------------MENU------------------");
     console.log("Tapez 1 pour ajouter un nouveau candidat ");
@@ -240,6 +278,8 @@ do {
             c = prompt("continue... ");
             break;
         case 4:
-                
+            modifier(candidats)
+            c = prompt("continue... "); 
+            break;   
     }
 } while (p!==0);
