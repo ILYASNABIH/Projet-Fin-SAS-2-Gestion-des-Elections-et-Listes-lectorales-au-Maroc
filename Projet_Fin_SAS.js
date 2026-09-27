@@ -59,17 +59,28 @@ function aligner(texte, largeur) {
     return str;
 }
 function tableau(infos) {
-    if (!Array.isArray(infos) || infos.length === 0)
-        {return console.log(infos)};
-        const colonnes = keys(infos[0]);
-        const largeurs = {};
-        pourchacun(colonnes, col => {
-            let max = col.length;
-            pourchacun(infos, item =>{
-                let val = item[col];
-                if (Array.isArray(val)) val = val.length;
-                let longueur = String(val ?? "").length;
-                if (longueur > max) max = longueur;
+    if (!Array.isArray(infos) || infos.length === 0){
+        return console.log(infos);
+    }
+    const colonnes = keys(infos[0]);
+    const largeurs = {};
+
+    pourchacun(colonnes, col => {
+        let max = col.length;
+        pourchacun(infos, item =>{
+            let val = item[col];
+            if (Array.isArray(val)) {
+                val = val.length;
+            }
+            let texteval = "";
+            if (val !== null && val !== undefined) {
+                texteval = String(val);
+            }
+
+                let longueur = texteval.length;
+                if (longueur > max) {
+                    max = longueur;
+                }
             });
             largeurs[col] = max;
         });
@@ -82,8 +93,14 @@ function tableau(infos) {
             const valeurs = map(colonnes, col => {
 
                 let val = item[col];
-                if (Array.isArray(val)) val = val.length;
-                return aligner(val ?? "", largeurs[col]);
+                if (Array.isArray(val)) {
+                    val = val.length;
+                }
+                let valeurfinale = "";
+                if (val !== null && val !== undefined){
+                    valeurfinale = val;
+                }
+                return aligner(valeurfinale, largeurs[col]);
             });
         console.log(`[${index}] | ` + join(valeurs, " | "));
         console.log("-".repeat(entetealignes.length));
@@ -150,6 +167,45 @@ function filtre(table) {
     tableau(resultat);
     }
 }
+function voter(table) {
+    console.clear();
+    const cinvoteur = prompt("Tapez votre CIN pour voter : ");
+    let dejavoter = false;
+    for (let i = 0; i < table.length; i++){
+        if(table[i].Electeurs) {
+            for (let j = 0; j < table[i].Electeurs.length; j++) {
+                if (table[i].Electeurs[j] === cinvoteur) {
+                    dejavoter = true;
+                    break;
+                }
+            }
+        }
+        if (dejavoter) break;
+    }
+    if (dejavoter) {
+        console.log("Vous avez déjà voté et vous n'avez pas le droit de modifier votre vote ni de voter à nouveau.");
+        return;
+    }
+    console.log("\n--- liste des candidats ---");
+    tableau(table);
+    const cincandidat = prompt("Tapez le CIN du candidat auquel vous voulez donner votre vote : ");
+    let trouve = false;
+    for (let i = 0; i < table.length; i++) {
+        if (table[i].CIN === cincandidat) {
+            trouve = true;
+            if(!table[i].Electeurs){
+            table[i].Electeurs = [];
+            }
+        table[i].Electeurs.push(cinvoteur);
+        console.log("Vote est enregistre avec succes");
+        break;
+        }
+    }
+    if (!trouve) {
+        console.log("aucun candidat trouve avec ce CIN.");
+    }
+}
+function modifier (table) {}
 do {
     console.log("-------------------MENU------------------");
     console.log("Tapez 1 pour ajouter un nouveau candidat ");
@@ -179,6 +235,11 @@ do {
                 f = prompt("continue ...")
             };
             break;
-        case 3:      
+        case 3:
+            voter(candidats);
+            c = prompt("continue... ");
+            break;
+        case 4:
+                
     }
-} while (p!==0)
+} while (p!==0);
