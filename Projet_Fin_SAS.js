@@ -254,6 +254,7 @@ function modifier (table) {
 function eliminer(table) {
     console.clear();
     const cin = prompt("Tapez le CIN de candidat a eliminer : ");
+    let found = false;
     
     for (let i = 0; i <table.length - 1; i++) {
         if (table[i].CIN === cin) {
@@ -263,8 +264,14 @@ function eliminer(table) {
         }
         if (table[table.length - 1].CIN === cin) {
             table.length = table.length - 1;
+            found = true
             console.log("Candidat supprime avec succes.");
+            
         }
+        
+    }
+    if (found === false) {
+        console.log("Aucun candidat trouve avec ce CIN")
     }
 }
 do {
@@ -276,7 +283,7 @@ do {
     console.log("Tapez 5 pour éliminer un candidat");
     console.log("Tapez 6 pour rechercher sur un candidat");
     console.log("Tapez 7 pour afficher les statistiques")
-    console.log("Tapez sur n'importe quel autre touche pour quitter le programme")
+    console.log("Tapez sur 0 ou entre pour quitter le programme")
     p = Number(prompt("choisir : "))
     switch(p) {
         case 1:
@@ -307,6 +314,6 @@ do {
             eliminer(candidats);
             c = prompt("continue... ");
             break;
-
+            
     }
 } while (p!==0);
