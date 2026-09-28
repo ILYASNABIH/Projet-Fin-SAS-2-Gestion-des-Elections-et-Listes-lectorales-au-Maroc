@@ -114,10 +114,9 @@ function ajouter(cin, nom, prenom, partipolitique, age,) {
             console.log("le candidat a ete ajoute avec succes");
             c = prompt("continue...");
             console.clear();
-            a = prompt("Voulez-vous ajouter autre condidat? ")
             console.log("Tapez sur 1 pour ajouter d'autre candidat.")
             console.log("Tapez sur n'importe quelle pour revenir au menu.")
-            
+            a = prompt("Voulez-vous ajouter autre condidat? ")
             if (a === "1"){
                 n = Number(prompt("Tapez le nombre des candidats a ajouter : "))
                 for (let i = 0 ; i <= n ; i++ ){
@@ -294,6 +293,12 @@ function rechercher (table) {
         console.log("Aucun candidat trouve avec ce Nom.");
     }
 }
+function NTDC (table) {
+    console.log("le nombre total des candidats est : " + table.length);
+}
+function NTDV(table) {
+
+}
 do {
     console.log("-------------------MENU------------------");
     console.log("Tapez 1 pour ajouter un nouveau candidat ");
@@ -336,6 +341,10 @@ do {
             break;
         case 6:
             rechercher(candidats);
+            c = prompt("continue... ");
+            break;
+        case 7:
+            NTDC (candidats);
             c = prompt("continue... ");
             break;
     }
