@@ -12,8 +12,7 @@ Nom : "Boushaba",
 Prénom : "Soufiane",
 PartiPolitique : "Independant",
 Age: 40,
-Electeurs: ["KL123456", "YI918273", "G784593"]
-}, {
+Electeurs: ["KL123456", "YI918273", "G784593"]}, {
 CIN: "CD987654",
 Nom: "Akhenoch",
 Prénom: "Aziz",
@@ -107,6 +106,7 @@ function tableau(infos) {
     });
 }
 function ajouter(cin, nom, prenom, partipolitique, age,) {
+            console.clear();
             cin = prompt("Tapez le CIN de candidat : ");
             nom = prompt("Tapez le nom de candidat : ");
             prenom = prompt("Tapez le prénom de candidat : ");
@@ -114,10 +114,15 @@ function ajouter(cin, nom, prenom, partipolitique, age,) {
             age = Number(prompt("Tapez l'age de candidat : "));
             candidats.push({CIN : cin, Nom : nom, Prénom: prenom, PartiPolitique: partipolitique, Age: age, Electeurs : [] })
             console.log("le candidat a ete ajoute avec succes");
-            a = prompt("Voulez-vous ajouter autre condidat? y/n")
-            if (a === "y"){
+            c = prompt("continue...");
+            console.clear();
+            a = prompt("Voulez-vous ajouter autre condidat? ")
+            console.log("Tapez sur 1 pour ajouter d'autre candidat.")
+            console.log("Tapez sur n'importe quelle pour revenir au menu.")
+            
+            if (a === "1"){
                 n = Number(prompt("Tapez le nombre des candidats a ajouter : "))
-                for (let i = 0 ; i < n ; i++ ){
+                for (let i = 0 ; i <= n ; i++ ){
                     cin = prompt("Tapez le CIN de candidat : ");
                     nom = prompt("Tapez le nom de candidat : ");
                     prenom = prompt("Tapez le prénom de candidat : ");
@@ -212,7 +217,7 @@ function modifier (table) {
     for (let i = 0; i < table.length; i++ ){
         if (table[i].CIN === cin) {
             found = true;
-            console.log(`\n Candidat trouve : ${table[i].Prénom} ${table[i].Nom}`);
+            console.log( "Candidat trouve : " ,table[i].Prénom ," ", table[i].Nom);
             console.log("Que souhaitez-vous modifier ? ")
             console.log("Tapez 1 pour changer le Nom");
             console.log("Tapez 2 pour changer le Prénom");
@@ -222,28 +227,46 @@ function modifier (table) {
             switch (choix) {
                 case 1:
                     table[i].Nom = prompt("Tapez le nouveau Nom : ");
+                    console.log("\n Les information du candidat sont ete ajoute avec succes");
                     break;
                 case 2:
                     table[i].Prénom = prompt("Tapez le nouveau Prenom : ");
+                    console.log("\n Les information du candidat sont ete ajoute avec succes");
                     break;
                 case 3:
                     table[i].PartiPolitique = prompt("Tapez la nouvelle Partie Politique : ");
+                    console.log("\n Les information du candidat sont ete ajoute avec succes");
                     break;
                 case 4:
                     table[i].Age = prompt("Tapez la nouvelle Age : ");
-                    break;
+                    console.log("\n Les information du candidat sont ete ajoute avec succes");
+                     break;
+
                 default:
                     console.log("choix invalide.");
             }
-            console.log("\n Les information du candidat sont ete ajoute avec succes");
-            break;
         }
     }
     if (!found) {
         console.log("Aucun candidat trouve avec ce CIN.");
     }
 }
-
+function eliminer(table) {
+    console.clear();
+    const cin = prompt("Tapez le CIN de candidat a eliminer : ");
+    
+    for (let i = 0; i <table.length - 1; i++) {
+        if (table[i].CIN === cin) {
+            let temp = table[i];
+            table [i] = table[i + 1];
+            table[i + 1] = temp;
+        }
+        if (table[table.length - 1].CIN === cin) {
+            table.length = table.length - 1;
+            console.log("Candidat supprime avec succes.");
+        }
+    }
+}
 do {
     console.log("-------------------MENU------------------");
     console.log("Tapez 1 pour ajouter un nouveau candidat ");
@@ -253,11 +276,10 @@ do {
     console.log("Tapez 5 pour éliminer un candidat");
     console.log("Tapez 6 pour rechercher sur un candidat");
     console.log("Tapez 7 pour afficher les statistiques")
-    console.log("Tapez 0 pour quitter le programme")
+    console.log("Tapez sur n'importe quel autre touche pour quitter le programme")
     p = Number(prompt("choisir : "))
     switch(p) {
         case 1:
-            console.clear()
             ajouter (candidats)
             c = prompt("continue...")
             break;
@@ -280,6 +302,11 @@ do {
         case 4:
             modifier(candidats)
             c = prompt("continue... "); 
-            break;   
+            break;
+        case 5:
+            eliminer(candidats);
+            c = prompt("continue... ");
+            break;
+
     }
 } while (p!==0);
