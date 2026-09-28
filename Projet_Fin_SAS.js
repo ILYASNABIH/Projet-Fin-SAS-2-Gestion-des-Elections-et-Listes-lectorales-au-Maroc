@@ -3,7 +3,6 @@ let p;
 let c;
 let a;
 let n;
-let f;
 const candidats = [{
 CIN : "AB123456",
 Nom : "Boushaba",
@@ -291,7 +290,7 @@ do {
             c =  Number(prompt("continue... "));
             if(c == 1) {
                 filtre(candidats)
-                f = prompt("continue ...")
+                c = prompt("continue ...")
             };
             break;
         case 3:
