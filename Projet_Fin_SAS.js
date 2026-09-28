@@ -18,36 +18,6 @@ PartiPolitique: "Independant",
 Age: 65,
 Electeurs: ["N987654", "J123456" , "H123678", "M974310"]
 }];
-function keys(object){
-    const cles = []
-    for (let cle in object) {
-        cles.push(cle)
-    }
-    return cles
-}
-function pourchacun(table, callback) {
-    for (let i = 0; i < table.length; i++) {
-        callback(table[i], i, table);
-    }
-}
-function join(table, separateur = ",") {
-    let result = "";
-    for (let i = 0; i < table.length; i++ ) {
-        let valeur = (table[i] !== null && table[i] !== undefined) ? table[i] : ""
-        result += valeur;
-        if (i < table.length - 1 ) {
-            result += separateur;
-        }
-    }
-    return result;
-}
-function map(table, callback) {
-    const result = [];
-    for (let i = 0; i < table.length; i++) {
-        result.push(callback(table[i], i, table));
-    }
-    return result;
-}
 function aligner(texte, largeur) {
     let str = String(texte);
     while (str.length < largeur){
@@ -55,53 +25,27 @@ function aligner(texte, largeur) {
     }
     return str;
 }
+
 function tableau(infos) {
-    if (!Array.isArray(infos) || infos.length === 0){
-        return console.log(infos);
+    if (!Array.isArray(infos) || infos.length === 0) {
+        console.log("Aucune donnée à afficher.");
+        return;
     }
-    const colonnes = keys(infos[0]);
-    const largeurs = {};
-
-    pourchacun(colonnes, col => {
-        let max = col.length;
-        pourchacun(infos, item =>{
-            let val = item[col];
-            if (Array.isArray(val)) {
-                val = val.length;
-            }
-            let texteval = "";
-            if (val !== null && val !== undefined) {
-                texteval = String(val);
-            }
-
-                let longueur = texteval.length;
-                if (longueur > max) {
-                    max = longueur;
-                }
-            });
-            largeurs[col] = max;
-        });
-        const entete = map(colonnes, col => aligner(col, largeurs[col]));
-        const entetealignes = "N.C | " + join(entete, " | ");
-        console.log(entetealignes);
-        console.log("-".repeat(entetealignes.length));
-
-        pourchacun(infos, (item, index) => {
-            const valeurs = map(colonnes, col => {
-
-                let val = item[col];
-                if (Array.isArray(val)) {
-                    val = val.length;
-                }
-                let valeurfinale = "";
-                if (val !== null && val !== undefined){
-                    valeurfinale = val;
-                }
-                return aligner(valeurfinale, largeurs[col]);
-            });
-        console.log(`[${index}] | ` + join(valeurs, " | "));
-        console.log("-".repeat(entetealignes.length));
-    });
+    console.log("N.C | CIN      | Nom        | Prénom   | PartiPolitique | Âge | Votes");
+    console.log("---------------------------------------------------------------------");
+    for (let i = 0; i < infos.length; i++) {
+        let candidate = infos[i];
+        let nbVotes = candidate.Electeurs ? candidate.Electeurs.length : 0;
+        let nc = aligner(i + 1, 3);
+        let cin = aligner(candidate.CIN, 8);
+        let nom = aligner(candidate.Nom, 10);
+        let prenom = aligner(candidate.Prénom, 8);
+        let parti = aligner(candidate.PartiPolitique, 14);
+        let age = aligner(candidate.Age, 3);
+        let votes = aligner(nbVotes, 5);
+        console.log(`${nc} | ${cin} | ${nom} | ${prenom} | ${parti} | ${age} | ${votes}`);
+    }
+    console.log("---------------------------------------------------------------------\n");
 }
 function ajouter(cin, nom, prenom, partipolitique, age,) {
             console.clear();
@@ -119,7 +63,7 @@ function ajouter(cin, nom, prenom, partipolitique, age,) {
             a = prompt("Voulez-vous ajouter autre condidat? ")
             if (a === "1"){
                 n = Number(prompt("Tapez le nombre des candidats a ajouter : "))
-                for (let i = 0 ; i <= n ; i++ ){
+                for (let i = 0 ; i < n ; i++ ){
                     cin = prompt("Tapez le CIN de candidat : ");
                     nom = prompt("Tapez le nom de candidat : ");
                     prenom = prompt("Tapez le prénom de candidat : ");
@@ -294,11 +238,32 @@ function rechercher (table) {
     }
 }
 function NTDC (table) {
-    console.log("le nombre total des candidats est : " + table.length);
+    console.log("1. le nombre total des candidats est : " + table.length);
 }
 function NTDV(table) {
-
+    let totalVotes = 0;
+    for (let i = 0; i < table.length; i++) {
+        if (table[i].Electeurs) {
+            totalVotes += table[i].Electeurs.length;
+        }
+    }
+    console.log("2. Nombre total de votes exprimés : " + totalVotes);
 }
+
+function T3DC(table) {
+    console.log("3. Top 3 des candidats :");
+    Tri(table);
+    if (table.length > 0) {
+        console.log("Top 1 : " + table[0].Nom + " " + table[0].Prénom + " (" + table[0].Electeurs.length + " votes)");
+    }
+    if (table.length > 1) {
+        console.log("Top 2 : " + table[1].Nom + " " + table[1].Prénom + " (" + table[1].Electeurs.length + " votes)");
+    }
+    if (table.length > 2) {
+        console.log("Top 3 : " + table[2].Nom + " " + table[2].Prénom + " (" + table[2].Electeurs.length + " votes)");
+    }
+}
+
 do {
     console.log("-------------------MENU------------------");
     console.log("Tapez 1 pour ajouter un nouveau candidat ");
@@ -309,7 +274,9 @@ do {
     console.log("Tapez 6 pour rechercher sur un candidat");
     console.log("Tapez 7 pour afficher les statistiques")
     console.log("Tapez sur 0 ou entre pour quitter le programme")
+
     p = Number(prompt("choisir : "))
+
     switch(p) {
         case 1:
             ajouter (candidats)
@@ -345,6 +312,8 @@ do {
             break;
         case 7:
             NTDC (candidats);
+            NTDV (candidats);
+            T3DC (candidats);
             c = prompt("continue... ");
             break;
     }
