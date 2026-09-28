@@ -3,9 +3,7 @@ let p;
 let c;
 let a;
 let n;
-let s;
 let f;
-let found;
 const candidats = [{
 CIN : "AB123456",
 Nom : "Boushaba",
@@ -274,6 +272,28 @@ function eliminer(table) {
         console.log("Aucun candidat trouve avec ce CIN")
     }
 }
+function rechercher (table) {
+    console.clear();
+    const nom = prompt("Tapez le nom du candidat a rechercher : ");
+    let found = false;
+    for (let i = 0; i < table.length; i++) {
+        if (table[i].Nom === nom) {
+            console.clear();
+            found = true;
+            console.log("---candidat trouve---")
+            console.log("CIN : " + table[i].CIN);
+            console.log("Nom : " + table[i].Nom);
+            console.log("Prénom : " + table[i].Prénom);
+            console.log("Parti Politique : " + table[i].PartiPolitique);
+            console.log("Âge : " + table[i].Age);
+            console.log("Nombre de votes : " + table[i].Electeurs.length);
+            break;
+        }
+    }
+    if (found === false) {
+        console.log("Aucun candidat trouve avec ce Nom.");
+    }
+}
 do {
     console.log("-------------------MENU------------------");
     console.log("Tapez 1 pour ajouter un nouveau candidat ");
@@ -314,6 +334,9 @@ do {
             eliminer(candidats);
             c = prompt("continue... ");
             break;
-            
+        case 6:
+            rechercher(candidats);
+            c = prompt("continue... ");
+            break;
     }
 } while (p!==0);
