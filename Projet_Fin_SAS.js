@@ -242,9 +242,7 @@ function NTDC (table) {
 function NTDV(table) {
     let totalVotes = 0;
     for (let i = 0; i < table.length; i++) {
-        if (table[i].Electeurs) {
             totalVotes += table[i].Electeurs.length;
-        }
     }
     console.log("2. Nombre total de votes exprimés : " + totalVotes);
 }
